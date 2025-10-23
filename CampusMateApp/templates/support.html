@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Support & Contact</h1>
+        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            We're here to help! Get assistance with CampusMate, report issues, or share your feedback. Our support team is committed to providing you with the best educational experience.
+        </p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Contact Information -->
+        <div class="lg:col-span-1">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sticky top-8">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Get in Touch</h2>
+                
+                <!-- Email Contact -->
+                <div class="mb-6">
+                    <div class="flex items-center mb-3">
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-3">
+                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Email Support</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">For general inquiries and support:</p>
+                    <a href="mailto:campusmatehub@gmail.com" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">
+                        campusmatehub@gmail.com
+                    </a>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs mt-1">Response time: 24-48 hours</p>
+                </div>
+
+                <!-- Response Times -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Response Times</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-300">General Inquiries</span>
+                            <span class="text-gray-900 dark:text-white font-medium">24-48 hours</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-300">Technical Issues</span>
+                            <span class="text-gray-900 dark:text-white font-medium">12-24 hours</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-300">Bug Reports</span>
+                            <span class="text-gray-900 dark:text-white font-medium">24-72 hours</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-600 dark:text-gray-300">Feature Requests</span>
+                            <span class="text-gray-900 dark:text-white font-medium">1-2 weeks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Hours -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Support Hours</h3>
+                    <div class="text-sm text-gray-600 dark:text-gray-300">
+                        <p class="mb-1"><strong>Monday - Friday:</strong> 9:00 AM - 6:00 PM</p>
+                        <p class="mb-1"><strong>Saturday:</strong> 10:00 AM - 4:00 PM</p>
+                        <p class="mb-1"><strong>Sunday:</strong> Closed</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">*Times are in your local timezone</p>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <a href="{% url 'CampusMateApp:community' %}" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-md transition-colors duration-300">
+                            Visit Community Forum
+                        </a>
+                        <a href="{% url 'CampusMateApp:privacy_policy' %}" class="block w-full bg-gray-600 hover:bg-gray-700 text-white text-center py-2 px-4 rounded-md transition-colors duration-300">
+                            Privacy Policy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- FAQ Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+                
+                <div class="space-y-6">
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">How do I create an account?</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Click the "Sign Up" button in the top navigation, fill in your details, and verify your email address. You'll have access to all CampusMate features immediately after registration.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-green-500 pl-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">How do I access slip solutions?</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Navigate to "Slip Solutions" in the main menu. You can filter by class, year, and semester to find the specific solutions you need. All solutions include detailed explanations and code examples.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-purple-500 pl-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Can I contribute to the community?</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Absolutely! Visit the Community section to ask questions, share knowledge, and help fellow students. You can create new threads, reply to existing discussions, and upvote helpful content.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-orange-500 pl-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">How do I report a bug or issue?</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Send an email to campusmatehub@gmail.com with a detailed description of the issue, steps to reproduce it, and any error messages you encountered. Include your browser and device information for faster resolution.
+                        </p>
+                    </div>
+
+                    <div class="border-l-4 border-red-500 pl-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Is my data secure?</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Yes, we take data security seriously. All data is encrypted in transit and at rest. We never share your personal information with third parties. Read our Privacy Policy for more details.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Categories -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Support Categories</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Account Issues</h3>
+                        </div>
+                        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                            <li>• Login problems</li>
+                            <li>• Password reset</li>
+                            <li>• Profile updates</li>
+                            <li>• Account deletion</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Technical Support</h3>
+                        </div>
+                        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                            <li>• Browser compatibility</li>
+                            <li>• Performance issues</li>
+                            <li>• Feature not working</li>
+                            <li>• Mobile app problems</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center mr-3">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Content Questions</h3>
+                        </div>
+                        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                            <li>• Slip solution errors</li>
+                            <li>• Missing content</li>
+                            <li>• Explanation requests</li>
+                            <li>• Topic suggestions</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center mr-3">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">Community Help</h3>
+                        </div>
+                        <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                            <li>• Forum guidelines</li>
+                            <li>• Posting issues</li>
+                            <li>• Moderation concerns</li>
+                            <li>• Community features</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Send us a Message</h2>
+                
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="Enter your full name">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="your.email@example.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                        <select id="subject" name="subject" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                            <option value="">Select a category</option>
+                            <option value="account">Account Issues</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="content">Content Questions</option>
+                            <option value="community">Community Help</option>
+                            <option value="bug">Bug Report</option>
+                            <option value="feature">Feature Request</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                        <textarea id="message" name="message" rows="6" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" placeholder="Please describe your issue or question in detail..."></textarea>
+                    </div>
+
+                    <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-blue-700 dark:text-blue-300">
+                                    <strong>Note:</strong> This form is for demonstration purposes. For actual support, please email us directly at 
+                                    <a href="mailto:campusmatehub@gmail.com" class="underline">campusmatehub@gmail.com</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="button" onclick="window.location.href='mailto:campusmatehub@gmail.com?subject=Support Request&body=Please describe your issue here...'" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors duration-300">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Additional Resources -->
+            <div class="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-6">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Additional Resources</h2>
+                
+                <div class="grid md:grid-cols-3 gap-4">
+                    <a href="{% url 'CampusMateApp:community' %}" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+                            </svg>
+                            <h3 class="font-medium text-gray-900 dark:text-white">Community Forum</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Get help from other students and share your knowledge</p>
+                    </a>
+
+                    <a href="{% url 'CampusMateApp:privacy_policy' %}" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 text-green-600 dark:text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                            <h3 class="font-medium text-gray-900 dark:text-white">Privacy Policy</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Learn how we protect your data and privacy</p>
+                    </a>
+
+                    <a href="{% url 'CampusMateApp:terms_of_service' %}" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 text-purple-600 dark:text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                            <h3 class="font-medium text-gray-900 dark:text-white">Terms of Service</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Read our terms and conditions</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

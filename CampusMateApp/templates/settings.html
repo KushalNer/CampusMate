@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 bg-[#F2F2F2] dark:bg-[#1a1a1a] min-h-screen">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-4xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-8 text-center">Settings</h1>
+
+        <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-8 rounded-xl shadow-lg border border-[#C4C4C4] dark:border-[#404040]">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Dark Mode Toggle -->
+                <div class="flex items-center justify-between p-6 bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-lg border border-[#C4C4C4] dark:border-[#404040]">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-[#404F68] dark:bg-[#7A859D] rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-[#F2F2F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-[#404F68] dark:text-[#F2F2F2]">Dark Mode</h3>
+                            <p class="text-[#7A859D] dark:text-[#B9C1D0]">Switch between light and dark themes</p>
+                        </div>
+                    </div>
+                    
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" name="dark_mode" class="sr-only peer" {% if dark_mode %}checked{% endif %}>
+                        <div class="w-14 h-7 bg-[#C4C4C4] dark:bg-[#404040] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#7A859D] dark:peer-focus:ring-[#404F68] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-[#7A859D] dark:peer-checked:bg-[#404F68]"></div>
+                    </label>
+                </div>
+
+                <!-- Additional Settings Placeholder -->
+                <div class="p-6 bg-[#F2F2F2] dark:bg-[#1a1a1a] rounded-lg border border-[#C4C4C4] dark:border-[#404040]">
+                    <h3 class="text-lg font-semibold text-[#404F68] dark:text-[#F2F2F2] mb-4">Account Preferences</h3>
+                    <p class="text-[#7A859D] dark:text-[#B9C1D0]">More settings will be available soon!</p>
+                </div>
+
+                <!-- Save Button -->
+                <div class="flex justify-center pt-4">
+                    <button type="submit" class="bg-[#7A859D] hover:bg-[#404F68] dark:bg-[#ffffff] dark:text-[#2d2d2d]  dark:hover:bg-[#7A859D] text-[#F2F2F2] px-8 py-3 rounded-lg font-medium transition duration-300 shadow-lg hover:shadow-xl">
+                        Save Settings
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Back to Profile -->
+        <div class="mt-6 text-center">
+            <a href="{% url 'CampusMateApp:profile' user.username %}" class="text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition duration-300">
+                ← Back to Profile
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Apply dark mode immediately if enabled
+    const darkMode = {{ dark_mode|yesno:"true,false" }};
+    if (darkMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('darkMode', 'true');
+    } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('darkMode', 'false');
+    }
+    
+    // Toggle dark mode on checkbox change
+    const darkModeToggle = document.querySelector('input[name="dark_mode"]');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('darkMode', 'false');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

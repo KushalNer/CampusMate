@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300">
+    <h1 class="text-4xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-8 text-center transition-colors duration-300">Community Forum</h1>
+
+    <!-- Search and Filter Section -->
+    <div class="mb-8">
+        <form method="get" class="flex flex-col md:flex-row gap-4 mb-6">
+            <div class="flex-1">
+                <input type="text" name="q" placeholder="Search threads..." value="{{ search_query|default_if_none:'' }}" class="w-full p-3 border border-[#C4C4C4] dark:border-[#404040] rounded-md bg-[#F2F2F2] dark:bg-[#1a1a1a] text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] transition-colors duration-300">
+            </div>
+            <div class="md:w-48">
+                <select name="category" class="w-full p-3 border border-[#C4C4C4] dark:border-[#404040] rounded-md bg-[#F2F2F2] dark:bg-[#1a1a1a] text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] transition-colors duration-300">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d]  text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-3 rounded-md font-medium transition duration-300">Search</button>
+        </form>
+    </div>
+
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">
+            {% if threads %}
+                {{ threads.count }} Thread{{ threads.count|pluralize }}
+            {% else %}
+                No Threads Found
+            {% endif %}
+        </h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'CampusMateApp:create_thread' %}" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d] text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-3 rounded-md font-medium transition duration-300">Create New Thread</a>
+        {% else %}
+            <a href="{% url 'CampusMateApp:login' %}" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d]  text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-3 rounded-md font-medium transition duration-300">Login to Create Thread</a>
+        {% endif %}
+    </div>
+
+    <div class="grid grid-cols-1 gap-6">
+        {% if threads %}
+            {% for thread in threads %}
+                <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-6 rounded-lg shadow-md border border-[#C4C4C4] dark:border-[#404040] {% if thread.is_solved %}bg-[#C4C4C4]/30 dark:bg-[#404040]/30{% endif %} transition-colors duration-300">
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-xl font-semibold text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">
+                            {{ thread.title }}
+                            {% if thread.is_solved %}
+                                <span class="text-green-600 dark:text-green-400 text-sm ml-2 transition-colors duration-300">(Solved)</span>
+                            {% endif %}
+                        </h2>
+                        <div class="flex items-center space-x-2">
+                            <span class="bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] px-3 py-1 rounded-md text-sm transition-colors duration-300">▲ {{ thread.upvotes }}</span>
+                            <span class="bg-[#F2F2F2] dark:bg-[#1a1a1a] text-[#404F68] dark:text-[#F2F2F2] px-3 py-1 rounded-md text-sm border border-[#C4C4C4] dark:border-[#404040] transition-colors duration-300">👁 {{ thread.views }}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="text-gray-700 dark:text-gray-300 text-sm transition-colors duration-300">
+                            Posted by: <span class="font-medium text-[#7A859D] dark:text-[#B9C1D0] transition-colors duration-300">{{ thread.author.get_full_name|default:thread.author.username }}</span> 
+                            on {{ thread.created_at|date:"M d, Y" }}
+                        </p>
+                        <span class="bg-[#404F68] dark:bg-[#7A859D] text-[#F2F2F2] px-2 py-1 rounded text-xs transition-colors duration-300">{{ thread.category }}</span>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 transition-colors duration-300 mb-4">{{ thread.content|truncatechars:200 }}</p>
+                    <div class="flex items-center justify-between">
+                        <a href="{% url 'CampusMateApp:thread_detail' thread.pk %}" class="inline-block text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition-colors duration-300">
+                            Read Thread &rarr;
+                        </a>
+                        <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">
+                            {{ thread.replies.count }} repl{{ thread.replies.count|pluralize:"y,ies" }}
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center py-12">
+                <h3 class="text-xl font-semibold text-[#404F68] dark:text-[#F2F2F2] mb-4 transition-colors duration-300">No threads found</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-6 transition-colors duration-300">
+                    {% if search_query or selected_category %}
+                        Try adjusting your search criteria or create a new thread.
+                    {% else %}
+                        Be the first to start a discussion in the community!
+                    {% endif %}
+                </p>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'CampusMateApp:create_thread' %}" class="bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-3 rounded-md font-medium transition duration-300">Create First Thread</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

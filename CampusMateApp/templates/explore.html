@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300">
+    <h1 class="text-4xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-8 text-center transition-colors duration-300">Explore Topics</h1>
+
+    <!-- Search Bar -->
+    <form method="get" action="{% url 'CampusMateApp:explore_topics' %}" class="mb-8 flex justify-center">
+        <input type="text" name="q" placeholder="Search for topics..." value="{{ search_query|default_if_none:'' }}" class="w-full max-w-lg p-3 border border-[#C4C4C4] dark:border-[#404040] rounded-l-md bg-[#B9C1D0] dark:bg-[#2d2d2d] text-[#404F68] dark:text-[#F2F2F2] focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] transition-colors duration-300">
+        <button type="submit" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d] text-[#F2F2F2] hover:bg-[#404F68] dark:hover:bg-[#7A859D] px-6 py-3 rounded-r-md font-medium transition duration-300">Search</button>
+    </form>
+
+    <!-- Filter Toggle Button for Mobile -->
+    <div class="md:hidden mb-4">
+        <button id="filter-toggle-button" class="bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] hover:bg-[#404F68] dark:hover:bg-[#7A859D] px-4 py-2 rounded-md w-full font-medium transition duration-300">Toggle Filters</button>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-8">
+        <!-- Filters Panel -->
+        <aside id="filters-panel" class="hidden md:block md:w-1/4 bg-[#7A859D] dark:bg-[#2d2d2d] p-6 rounded-lg shadow-md transition-colors duration-300">
+            <h2 class="text-2xl font-semibold text-[#F2F2F2] mb-4">Filters</h2>
+            <form method="get" action="{% url 'CampusMateApp:explore_topics' %}">
+                <input type="hidden" name="q" value="{{ search_query|default_if_none:'' }}">
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-[#F2F2F2] mb-2">Category</h3>
+                    <label class="block text-[#F2F2F2] mb-2">
+                        <input type="radio" name="category" value="" class="mr-2" {% if not selected_category %}checked{% endif %}> All Categories
+                    </label>
+                    {% for category_name in categories %}
+                        <label class="block text-[#F2F2F2] mb-2">
+                            <input type="radio" name="category" value="{{ category_name }}" class="mr-2" {% if category_name == selected_category %}checked{% endif %}> {{ category_name }}
+                        </label>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="bg-[#404F68] dark:bg-[#ffffff] dark:text-[#2d2d2d] text-[#F2F2F2] hover:bg-opacity-80 px-4 py-2 rounded-md w-full transition duration-300">Apply Filters</button>
+            </form>
+        </aside>
+
+        <!-- Topics Grid -->
+        <section class="md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% if topics %}
+                {% for topic in topics %}
+                    <a href="{% url 'CampusMateApp:explore_topic_detail' pk=topic.pk %}" class="block bg-[#B9C1D0] dark:bg-[#2d2d2d] p-6 rounded-lg shadow-md border border-[#C4C4C4] dark:border-[#404040] hover:bg-opacity-80 dark:hover:bg-[#404040] transition duration-300">
+                        {% if topic.image %}
+                            <img src="{{ topic.image.url }}" alt="{{ topic.title }}" class="w-full h-40 object-cover rounded-md mb-4">
+                        {% endif %}
+                        <h3 class="text-xl font-semibold text-[#404F68] dark:text-[#F2F2F2] mb-2 transition-colors duration-300">{{ topic.title }}</h3>
+                        <p class="text-gray-700 dark:text-gray-300 text-sm transition-colors duration-300">{{ topic.description|truncatechars:100 }}</p>
+                        <p class="mt-4 inline-block text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition-colors duration-300">View Details &rarr;</p>
+                    </a>
+                {% endfor %}
+            {% else %}
+                <p class="text-center text-[#404F68] dark:text-[#F2F2F2] col-span-full transition-colors duration-300">No topics found matching your criteria.</p>
+            {% endif %}
+        </section>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButton = document.getElementById('filter-toggle-button');
+        const filtersPanel = document.getElementById('filters-panel');
+
+        if (filterButton && filtersPanel) {
+            filterButton.addEventListener('click', () => {
+                filtersPanel.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
+{% endblock %}
+

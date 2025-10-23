@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-8 rounded-xl shadow-lg transition-colors duration-300">
+            <div class="flex items-center justify-between mb-6">
+                <h1 class="text-3xl font-bold text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">Create New Thread</h1>
+                <a href="{% url 'CampusMateApp:community' %}" class="text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition-colors duration-300">← Back to Community</a>
+            </div>
+
+         
+
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <div>
+                    <label for="{{ form.title.id_for_label }}" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">{{ form.title.label }}</label>
+                    {{ form.title }}
+                    {% for error in form.title.errors %}
+                        <p class="text-red-500 dark:text-red-400 text-xs italic mt-1 transition-colors duration-300">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="{{ form.category.id_for_label }}" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">{{ form.category.label }}</label>
+                    {{ form.category }}
+                    {% for error in form.category.errors %}
+                        <p class="text-red-500 dark:text-red-400 text-xs italic mt-1 transition-colors duration-300">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="{{ form.content.id_for_label }}" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">{{ form.content.label }}</label>
+                    {{ form.content }}
+                    {% for error in form.content.errors %}
+                        <p class="text-red-500 dark:text-red-400 text-xs italic mt-1 transition-colors duration-300">{{ error }}</p>
+                    {% endfor %}
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 transition-colors duration-300">
+                        Be descriptive and provide as much detail as possible to help others understand your question or topic.
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between pt-6">
+                    <button type="submit" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d]  text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-8 py-3 rounded-md font-medium transition duration-300">
+                        Create Thread
+                    </button>
+                    <a href="{% url 'CampusMateApp:community' %}" class="text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition-colors duration-300">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

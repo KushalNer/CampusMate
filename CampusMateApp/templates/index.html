@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bg-[#F2F2F2] dark:bg-[#1a1a1a] py-20 text-center transition-colors duration-300">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-4 transition-colors duration-300">Welcome to CampusMate – Your Student Companion</h1>
+    <p class="text-lg sm:text-xl md:text-2xl text-[#7A859D] dark:text-[#B9C1D0] mb-8 transition-colors duration-300">Explore, Learn, Share</p>
+    <div class="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0 items-center justify-center">
+        <a href="{% url 'CampusMateApp:explore_topics' %}" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d]  text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-8 py-3 rounded-md text-lg font-medium transition duration-300">Explore Topics</a>
+        <a href="{% url 'CampusMateApp:slip_solutions' %}" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d]  text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-8 py-3 rounded-md text-lg font-medium transition duration-300">Slip Solutions</a>
+        <a href="{% url 'CampusMateApp:community' %}" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d]  text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-8 py-3 rounded-md text-lg font-medium transition duration-300">Community</a>
+    </div>
+</div>
+
+<section class="py-16 bg-[#B9C1D0] dark:bg-[#2d2d2d] rounded-lg shadow-md mt-12 transition-colors duration-300">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-[#404F68] dark:text-[#F2F2F2] text-center mb-12 transition-colors duration-300">Featured Content</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Featured Card 1 -->
+            <div class="bg-[#F2F2F2] dark:bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#C4C4C4] dark:border-[#404040] hover:shadow-xl hover:scale-102 transition duration-300">
+                <h3 class="text-2xl font-semibold text-[#404F68] dark:text-[#F2F2F2] mb-3 transition-colors duration-300">Understanding Data Structures</h3>
+                <p class="text-gray-700 dark:text-gray-300 transition-colors duration-300">Dive deep into arrays, linked lists, trees, and graphs with detailed explanations.</p>
+                <a href="#" class="mt-4 inline-block text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition-colors duration-300">Read More &rarr;</a>
+            </div>
+            <!-- Featured Card 2 -->
+            <div class="bg-[#F2F2F2] dark:bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#C4C4C4] dark:border-[#404040] hover:shadow-xl hover:scale-102 transition duration-300">
+                <h3 class="text-2xl font-semibold text-[#404F68] dark:text-[#F2F2F2] mb-3 transition-colors duration-300">Python Basics: A Quick Guide</h3>
+                <p class="text-gray-700 dark:text-gray-300 transition-colors duration-300">Get started with Python programming with this beginner-friendly guide.</p>
+                <a href="#" class="mt-4 inline-block text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition-colors duration-300">Read More &rarr;</a>
+            </div>
+            <!-- Featured Card 3 -->
+            <div class="bg-[#F2F2F2] dark:bg-[#1a1a1a] p-6 rounded-lg shadow-lg border border-[#C4C4C4] dark:border-[#404040] hover:shadow-xl hover:scale-102 transition duration-300">
+                <h3 class="text-2xl font-semibold text-[#404F68] dark:text-[#F2F2F2] mb-3 transition-colors duration-300">Effective Study Techniques</h3>
+                <p class="text-gray-700 dark:text-gray-300 transition-colors duration-300">Learn how to maximize your study time and retain information better.</p>
+                <a href="#" class="mt-4 inline-block text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition-colors duration-300">Read More &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 bg-[#F2F2F2] dark:bg-[#1a1a1a] mt-12 transition-colors duration-300">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-8 transition-colors duration-300">Search for Anything</h2>
+        <div class="flex justify-center">
+            <input type="text" placeholder="e.g., Python algorithms, Linear Algebra" class="w-full max-w-md p-4 border border-[#C4C4C4] dark:border-[#404040] rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] bg-[#F2F2F2] dark:bg-[#2d2d2d] text-gray-800 dark:text-gray-200 transition-colors duration-300">
+            <button class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d]  text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-4 rounded-r-md font-medium transition duration-300">Search</button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

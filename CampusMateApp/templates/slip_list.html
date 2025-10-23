@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mx-auto px-6 py-8 bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300">
+    <h1 class="text-4xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-8 text-center transition-colors duration-300">Slip Solutions</h1>
+
+    <!-- Filters Section -->
+    <div class="max-w-xl mx-auto mb-8 bg-[#B9C1D0] dark:bg-[#2d2d2d] p-6 rounded-lg shadow-md border border-[#C4C4C4] dark:border-[#404040] transition-colors duration-300">
+        <form method="get" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div class="w-full sm:w-1/2 lg:w-1/3">
+                <label for="class" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">Class:</label>
+                <select name="class" id="class" class="w-full border border-[#C4C4C4] dark:border-[#404040] bg-[#F2F2F2] dark:bg-[#1a1a1a] p-2 rounded text-[#404F68] dark:text-[#F2F2F2] focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] transition-colors duration-300">
+                    <option value="">All Classes</option>
+                    {% for c in classes %}
+                        <option value="{{ c.class_name }}" {% if selected_class == c.class_name %}selected{% endif %}>{{ c.class_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="w-full sm:w-1/2 lg:w-1/3">
+                <label for="year" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">Year:</label>
+                <select name="year" id="year" class="w-full border border-[#C4C4C4] dark:border-[#404040] bg-[#F2F2F2] dark:bg-[#1a1a1a] p-2 rounded text-[#404F68] dark:text-[#F2F2F2] focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] transition-colors duration-300">
+                    <option value="">All Years</option>
+                    {% for y in years %}
+                        <option value="{{ y }}" {% if selected_year == y %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="w-full sm:w-1/2 lg:w-1/3">
+                <label for="sem" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">Semester:</label>
+                <select name="sem" id="sem" class="w-full border border-[#C4C4C4] dark:border-[#404040] bg-[#F2F2F2] dark:bg-[#1a1a1a] p-2 rounded text-[#404F68] dark:text-[#F2F2F2] focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] transition-colors duration-300">
+                    <option value="">All Semesters</option>
+                    {% for s in semesters %}
+                        <option value="{{ s }}" {% if selected_sem == s %}selected{% endif %}>{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d] text-[#F2F2F2] px-6 py-2 rounded hover:bg-[#404F68] dark:hover:bg-[#7A859D] transition duration-300 w-full sm:w-auto mt-7 sm:mt-7">Filter</button>
+        </form>
+    </div>
+
+  <!-- Slips -->
+  {% for slip in slips %}
+    <div class="mb-8 bg-[#B9C1D0] dark:bg-[#2d2d2d] p-6 rounded-xl shadow-md transition-colors duration-300">
+      <h2 class="text-[#404F68] dark:text-[#F2F2F2] text-2xl font-bold mb-4 transition-colors duration-300">{{ slip.title }} ({{ slip.class_name.class_name }} - {{ slip.year }}{% if slip.sem %} - {{ slip.sem }}{% endif %})</h2>
+
+      <!-- Questions under this slip -->
+      <div class="mt-4 grid grid-cols-1 gap-3">
+        {% for q in slip.questions.all %}
+          <a href="{% url 'CampusMateApp:slip_question_detail' q.id %}" class="block bg-[#F2F2F2] dark:bg-[#1a1a1a] p-4 rounded-lg shadow-sm border border-[#C4C4C4] dark:border-[#404040] hover:bg-[#E0E0E0] dark:hover:bg-[#404040] transition duration-200">
+            <div class="flex items-center justify-between">
+              <h3 class="text-[#404F68] dark:text-[#F2F2F2] text-sm font-semibold transition-colors duration-300">{{ q.subject }} (Marks:{{q.marks}})</h3>
+              {% if q.verified %}
+                <span class="text-sm sm:text-xl md:text-xl bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d] text-[#F2F2F2] px-2 py-1 rounded transition-colors duration-300">Verified</span>
+              {% endif %}
+            </div>
+            <p class="text-[#404F68] dark:text-[#F2F2F2] text-lg mt-1 transition-colors duration-300">{{ q.question_text|truncatechars:100 }}</p>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% empty %}
+    <p class="text-[#404F68] dark:text-[#F2F2F2] text-center transition-colors duration-300">No slips found for this selection.</p>
+  {% endfor %}
+
+</div>
+
+{% endblock %}

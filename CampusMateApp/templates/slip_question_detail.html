@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mx-auto px-4 py-8 bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300">
+
+  <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-8 rounded-xl shadow-lg transition-colors duration-300">
+    <h1 class="text-2xl md:text-3xl text-gray-900 dark:text-[#F2F2F2] font-bold mb-4 transition-colors duration-300">{{ question.subject }} Question</h1>
+    <p class="text-gray-900 dark:text-[#F2F2F2] md:text-xl mb-4 transition-colors duration-300"><strong>Question:</strong> {{ question.question_text }}</p>
+    {% if question.marks %}
+      <p class="text-gray-900 dark:text-[#F2F2F2] md:text-lg mb-4 transition-colors duration-300"><strong>Marks:</strong> {{ question.marks }}</p>
+    {% endif %}
+
+    <div class="mt-6 relative bg-[#404F68] dark:bg-[#1a1a1a] p-4 rounded-lg shadow-inner transition-colors duration-300">
+      <h2 class="text-xl font-semibold text-[#F2F2F2] mb-2">Solution:</h2>
+      <button id="copySolution" class="absolute top-2 right-2 bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d] text-[#F2F2F2] hover:bg-[#B9C1D0] dark:hover:bg-[#7A859D] p-2 rounded-md text-sm transition duration-300">
+        Copy
+      </button>
+      <p id="solutionText" class="text-[#F2F2F2] whitespace-pre-line">{{ question.solution_text }}</p>
+    </div>
+
+    {% if question.explanation %}
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-[#F2F2F2] mb-2 transition-colors duration-300">Explanation:</h2>
+        <p class="text-gray-900 dark:text-[#F2F2F2] whitespace-pre-line transition-colors duration-300">{{ question.explanation }}</p>
+      </div>
+    {% endif %}
+
+    {% if question.output %}
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-[#F2F2F2] mb-2 transition-colors duration-300">Output:</h2>
+        <p class="text-gray-900 dark:text-[#F2F2F2] whitespace-pre-line transition-colors duration-300">{{ question.output }}</p>
+      </div>
+    {% endif %}
+
+    <div class="mt-8">
+      <a href="{% url 'CampusMateApp:slip_solutions' %}" class="bg-[#7A859D] dark:bg-[#ffffff] dark:text-[#2d2d2d] text-[#F2F2F2] px-4 py-2 rounded hover:bg-[#404F68] dark:hover:bg-[#7A859D] transition duration-300">Back to Slips</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const copyButton = document.getElementById('copySolution');
+        const solutionTextElement = document.getElementById('solutionText');
+
+        if (copyButton && solutionTextElement) {
+            copyButton.addEventListener('click', () => {
+                const textToCopy = solutionTextElement.innerText;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    copyButton.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyButton.textContent = 'Copy';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}

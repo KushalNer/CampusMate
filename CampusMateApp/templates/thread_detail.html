@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300">
+    <div class="max-w-4xl mx-auto">
+        <!-- Back Button -->
+        <div class="mb-6">
+            <a href="{% url 'CampusMateApp:community' %}" class="inline-block text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] font-medium transition-colors duration-300">← Back to Community</a>
+        </div>
+
+        <!-- Thread Content -->
+        <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-8 rounded-xl shadow-lg mb-6 transition-colors duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-2xl md:text-3xl font-bold text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">
+                    {{ thread.title }}
+                    {% if thread.is_solved %}
+                        <span class="text-green-600 dark:text-green-400 text-sm ml-2 transition-colors duration-300">(Solved)</span>
+                    {% endif %}
+                </h1>
+                <div class="flex items-center space-x-2">
+                    <span class="bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] px-3 py-1 rounded-md text-sm transition-colors duration-300">▲ {{ thread.upvotes }}</span>
+                    <span class="bg-[#F2F2F2] dark:bg-[#1a1a1a] text-[#404F68] dark:text-[#F2F2F2] px-3 py-1 rounded-md text-sm border border-[#C4C4C4] dark:border-[#404040] transition-colors duration-300">👁 {{ thread.views }}</span>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-4">
+                    <p class="text-gray-700 dark:text-gray-300 text-sm transition-colors duration-300">
+                        Posted by: <span class="font-medium text-[#7A859D] dark:text-[#B9C1D0] transition-colors duration-300">{{ thread.author.get_full_name|default:thread.author.username }}</span>
+                    </p>
+                    <p class="text-gray-700 dark:text-gray-300 text-sm transition-colors duration-300">
+                        {{ thread.created_at|date:"M d, Y" }}
+                    </p>
+                </div>
+                <span class="bg-[#404F68] dark:bg-[#7A859D] text-[#F2F2F2] px-3 py-1 rounded text-sm transition-colors duration-300">{{ thread.category }}</span>
+            </div>
+
+            <div class="prose prose-lg max-w-none dark:prose-invert">
+                <div class="content-html text-gray-900 dark:text-[#F2F2F2] transition-colors duration-300">
+                    {{ thread.content|linebreaks }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Replies Section -->
+        <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-8 rounded-xl shadow-lg mb-6 transition-colors duration-300">
+            <h2 class="text-2xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-6 transition-colors duration-300">
+                Replies ({{ replies.count }})
+            </h2>
+
+            {% if replies %}
+                <div class="space-y-6">
+                    {% for reply in replies %}
+                        <div class="border-l-4 border-[#7A859D] dark:border-[#404F68] pl-4 py-4 {% if reply.is_solution %}bg-green-50 dark:bg-green-900/20{% endif %} transition-colors duration-300">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-medium text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">{{ reply.author.get_full_name|default:reply.author.username }}</span>
+                                    {% if reply.is_solution %}
+                                        <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">Solution</span>
+                                    {% endif %}
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-300">{{ reply.created_at|date:"M d, Y" }}</span>
+                                    <span class="bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] px-2 py-1 rounded text-xs transition-colors duration-300">▲ {{ reply.upvotes }}</span>
+                                </div>
+                            </div>
+                            <div class="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+                                {{ reply.content|linebreaks }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-8">
+                    <p class="text-gray-700 dark:text-gray-300 transition-colors duration-300">No replies yet. Be the first to reply!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Reply Form -->
+        {% if user.is_authenticated %}
+            <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-8 rounded-xl shadow-lg transition-colors duration-300">
+                <h3 class="text-xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-4 transition-colors duration-300">Post a Reply</h3>
+                
+
+                <form method="post" class="space-y-4">
+                    {% csrf_token %}
+                    
+                    <div>
+                        <label for="{{ reply_form.content.id_for_label }}" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">{{ reply_form.content.label }}</label>
+                        {{ reply_form.content }}
+                        {% for error in reply_form.content.errors %}
+                            <p class="text-red-500 dark:text-red-400 text-xs italic mt-1 transition-colors duration-300">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-2 rounded-md font-medium transition duration-300">
+                            Post Reply
+                        </button>
+                    </div>
+                </form>
+            </div>
+        {% else %}
+            <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-8 rounded-xl shadow-lg text-center transition-colors duration-300">
+                <h3 class="text-xl font-bold text-[#404F68] dark:text-[#F2F2F2] mb-4 transition-colors duration-300">Want to Reply?</h3>
+                <p class="text-gray-700 dark:text-gray-300 mb-4 transition-colors duration-300">You need to be logged in to post a reply.</p>
+                <a href="{% url 'CampusMateApp:login' %}" class="bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-2 rounded-md font-medium transition duration-300">
+                    Login to Reply
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .content-html {
+        line-height: 1.7;
+    }
+    
+    .content-html h1, .content-html h2, .content-html h3, .content-html h4 {
+        font-weight: bold;
+        margin: 1rem 0 0.5rem 0;
+    }
+    
+    .content-html p {
+        margin: 0.5rem 0;
+    }
+    
+    .content-html ul, .content-html ol {
+        margin: 0.5rem 0;
+        padding-left: 1.5rem;
+    }
+    
+    .content-html li {
+        margin: 0.25rem 0;
+    }
+    
+    .content-html strong {
+        font-weight: bold;
+    }
+    
+    .content-html em {
+        font-style: italic;
+    }
+    
+    .content-html code {
+        background-color: #f1f5f9;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-family: 'Courier New', monospace;
+        font-size: 0.875rem;
+    }
+    
+    .dark .content-html code {
+        background-color: #1e293b;
+        color: #fbbf24;
+    }
+</style>
+{% endblock %}
+

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">User Profile</h1>
+        {% if user.is_authenticated and user == user_info.user %}
+            <a href="{% url 'CampusMateApp:edit_profile' user_info.user.username %}" class="bg-[#7A859D] dark:bg-[#dee1e4] dark:text-[#2d2d2d] text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-3 rounded-md transition duration-300 font-medium">
+                Edit Profile
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-1 max-w-screen-sm m-auto gap-8">
+        <!-- User Information -->
+        <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-6 rounded-lg shadow-md border border-[#C4C4C4] dark:border-[#404040] transition-colors duration-300">
+            <div class="text-center mb-6">
+                {% if user_info.profile_picture %}
+                    <img src="{{ user_info.profile_picture.url }}" alt="Profile Picture" class="w-40 h-40 rounded-full mx-auto mb-4 object-cover border-4 border-[#F2F2F2] dark:border-[#404F68]">
+                {% else %}
+                    <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-[#7A859D] dark:bg-[#404F68] flex items-center justify-center">
+                        <svg class="w-12 h-12 text-[#F2F2F2]" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                {% endif %}
+                <h2 class="text-2xl font-semibold text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">{{ user_info.user.get_full_name|default:user_info.user.username }}</h2>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex justify-between">
+                    <span class="font-medium text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">Username:</span>
+                    <span class="text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">{{ user_info.user.username }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="font-medium text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">Email:</span>
+                    <span class="text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">{{ user_info.user.email }}</span>
+                </div>
+                {% if user_info.student_id %}
+                <div class="flex justify-between">
+                    <span class="font-medium text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">Student ID:</span>
+                    <span class="text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">{{ user_info.student_id }}</span>
+                </div>
+                {% endif %}
+                {% if user_info.department %}
+                <div class="flex justify-between">
+                    <span class="font-medium text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">Department:</span>
+                    <span class="text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">{{ user_info.department }}</span>
+                </div>
+                {% endif %}
+                {% if user_info.year %}
+                <div class="flex justify-between">
+                    <span class="font-medium text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">Year:</span>
+                    <span class="text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">{{ user_info.year }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+{% comment %} 
+        <!-- Bookmarks Section -->
+        <div class="lg:col-span-2 bg-[#B9C1D0] dark:bg-[#2d2d2d] p-6 rounded-lg shadow-md border border-[#C4C4C4] dark:border-[#404040] transition-colors duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300">My Bookmarks</h2>
+                <span class="text-sm text-[#7A859D] dark:text-[#B9C1D0] transition-colors duration-300">{{ bookmarks.count }} bookmarks</span>
+            </div>
+            
+            {% if bookmarks %}
+                <div class="space-y-4">
+                    {% for bookmark in bookmarks %}
+                        <div class="bg-[#F2F2F2] dark:bg-[#1a1a1a] p-4 rounded-lg border border-[#C4C4C4] dark:border-[#404040] transition-colors duration-300">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center mb-2">
+                                        {% if bookmark.content_type == 'slip' %}
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 mr-3">
+                                                📚 Slip Solution
+                                            </span>
+                                        {% elif bookmark.content_type == 'topic' %}
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 mr-3">
+                                                🔍 Explore Topic
+                                            </span>
+                                        {% elif bookmark.content_type == 'thread' %}
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 mr-3">
+                                                💬 Community Thread
+                                            </span>
+                                        {% endif %}
+                                        <span class="text-xs text-[#7A859D] dark:text-[#B9C1D0] transition-colors duration-300">{{ bookmark.created_at|date:"M d, Y" }}</span>
+                                    </div>
+                                    <h3 class="text-lg font-medium text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300 mb-2">{{ bookmark.title }}</h3>
+                                    <a href="{{ bookmark.url }}" class="text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] transition-colors duration-300 text-sm">
+                                        View Content →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                {% if bookmarks.count > 10 %}
+                    <div class="mt-6 text-center">
+                        <button class="bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-6 py-2 rounded-md transition duration-300">
+                            View All Bookmarks
+                        </button>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="text-center py-12">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-[#7A859D] dark:bg-[#404F68] rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-[#F2F2F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-medium text-[#404F68] dark:text-[#F2F2F2] transition-colors duration-300 mb-2">No Bookmarks Yet</h3>
+                    <p class="text-[#7A859D] dark:text-[#B9C1D0] transition-colors duration-300 mb-4">
+                        Start bookmarking slip solutions, explore topics, and community threads to save them for later.
+                    </p>
+                    <div class="space-x-4">
+                        <a href="{% url 'CampusMateApp:slip_solutions' %}" class="inline-block bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-4 py-2 rounded-md transition duration-300 text-sm">
+                            Browse Slip Solutions
+                        </a>
+                        <a href="{% url 'CampusMateApp:explore_topics' %}" class="inline-block bg-[#7A859D] dark:bg-[#404F68] text-[#F2F2F2] hover:bg-opacity-80 dark:hover:bg-[#7A859D] px-4 py-2 rounded-md transition duration-300 text-sm">
+                            Explore Topics
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div> {% endcomment %}
+    </div>
+</div>
+{% endblock %}
+

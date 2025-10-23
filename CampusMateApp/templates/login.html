@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300">
+    <div class="bg-[#B9C1D0] dark:bg-[#2d2d2d] p-8 rounded-lg shadow-md border border-[#C4C4C4] dark:border-[#404040] w-full max-w-md transition-colors duration-300">
+        <h2 class="text-3xl font-bold text-[#404F68] dark:text-[#F2F2F2] text-center mb-6 transition-colors duration-300">Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="username" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">Username</label>
+                <input type="text" id="username" name="username" class="shadow appearance-none border border-[#C4C4C4] dark:border-[#404040] rounded w-full py-3 px-4 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300" placeholder="Enter your username">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-[#404F68] dark:text-[#F2F2F2] text-sm font-bold mb-2 transition-colors duration-300">Password</label>
+                <input type="password" id="password" name="password" class="shadow appearance-none border border-[#C4C4C4] dark:border-[#404040] rounded w-full py-3 px-4 text-gray-700 dark:text-gray-200 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-[#7A859D] dark:focus:ring-[#404F68] bg-[#F2F2F2] dark:bg-[#1a1a1a] transition-colors duration-300" placeholder="Enter your password">
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-[#7A859D] dark:bg-[#404F68] hover:bg-opacity-80 dark:hover:bg-[#7A859D] text-[#F2F2F2] font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline transition duration-300">Login</button>
+                <a href="{% url 'CampusMateApp:signup' %}" class="inline-block align-baseline font-bold text-sm text-[#7A859D] dark:text-[#B9C1D0] hover:text-[#404F68] dark:hover:text-[#F2F2F2] transition-colors duration-300">Don't have an account? Sign Up</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

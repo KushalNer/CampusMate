@@ -126,21 +126,21 @@ class CommunityReply(models.Model):
         return f'Reply to {self.thread.title} by {self.author.username}'
 
 
-class Bookmark(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
-    content_type = models.CharField(max_length=20, choices=[
-        ('slip', 'Slip Solution'),
-        ('topic', 'Explore Topic'),
-        ('thread', 'Community Thread'),
-    ])
-    content_id = models.PositiveIntegerField()
-    title = models.CharField(max_length=200)
-    url = models.URLField()
-    created_at = models.DateTimeField(auto_now_add=True)
+# class Bookmark(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookmarks')
+#     content_type = models.CharField(max_length=20, choices=[
+#         ('slip', 'Slip Solution'),
+#         ('topic', 'Explore Topic'),
+#         ('thread', 'Community Thread'),
+#     ])
+#     content_id = models.PositiveIntegerField()
+#     title = models.CharField(max_length=200)
+#     url = models.URLField()
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        ordering = ['-created_at']
-        unique_together = ['user', 'content_type', 'content_id']
+#     class Meta:
+#         ordering = ['-created_at']
+#         unique_together = ['user', 'content_type', 'content_id']
 
-    def __str__(self):
-        return f'{self.user.username} - {self.title}'
+#     def __str__(self):
+#         return f'{self.user.username} - {self.title}'
